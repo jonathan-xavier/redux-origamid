@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +8,55 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.5/redux.min.js"></script>
 
 </head>
-<body>
-   <script>
 
-    function reducer(){
-        return {
-            nome: 'jonathan',
-            id: 7
+<body>
+    <div>
+        <span id="total">Total:</span>
+        <button id="button">Incrementar</button>
+    </div>
+    <script>
+        const INCREMENTAR = 'incrementar'
+
+        const initialState = 10
+        function reducer(state = initialState, action) {
+            // if(action.type === 'somar'){
+            //     return state + action.payload
+            // }else {
+            //     return state
+            // }
+            if (action.type === INCREMENTAR) {
+                return state + 1
+            }
+            return {
+                state
+            }
         }
-    }
+
+        function incrementar() {
+            return { type: INCREMENTAR }
+        }
+        const render = () => {
+            const state = store.getState()
+            const field = document.getElementById('total')
+            console.log(state)
+            field.innerText = state
+        }
+
         const store = Redux.createStore(reducer)
-        console.log(store)
-   </script>
+        let state = store.getState()
+        
+        // store.dispatch({type: 'somar', payload: 25})
+        
+        render()
+        store.subscribe(render)
+        
+        const button = document.getElementById('button')
+        button.addEventListener('click', () => {
+            store.dispatch(incrementar())
+        })
+        console.log(store.getState())
+
+    </script>
 </body>
+
 </html>
